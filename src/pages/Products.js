@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
 const Products = () => {
+  //const navigate = useNavigate();
+  //navigate('/welcome'); // defaultni je push, pokud chceme replace, tak dame navigate('/wlecome', {replace: true})
+  // navigate(-1); // to nas posune na previous page. -2 by byla previous the previous page. 1 -> forward.
+
   return (
     <section>
       <h1>The Products Page</h1>

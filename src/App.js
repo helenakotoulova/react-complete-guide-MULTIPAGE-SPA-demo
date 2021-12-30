@@ -1,4 +1,4 @@
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Welcome from "./pages/Welcome";
 import Products from "./pages/Products";
 import Header from "./components/Header";
@@ -11,6 +11,38 @@ function App() {
         <Header />
       </header>
       <main>
+        <Routes>
+          <Route path="/" element={<Navigate to="/welcome" />} />
+          <Route path="/welcome/*" element={<Welcome />}>
+            <Route path="new-user" element={<p>Welcome, new user!</p>} />
+          </Route>
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:productId" element={<ProductDetail />} />
+        </Routes>
+      </main>
+    </div>
+  );
+}
+
+export default App;
+
+/*
+NYNI BUDEME UPRGRADOVAT NA REACT-ROUTER-DOM 6.
+=> switch se meni na routes. vkladame element. nepotrebujeme exact.
+=> Link, NavLink existuji i ve verzi 6, ale neni tam activeClassName.
+Puvodni verze NavLink: <NavLink activeClassName={classes.active} to="/welcome">Welcome</NavLink>
+=> useParams zustava stejne.
+=> Redirect uz neni, misto toho je Navigate.
+=> i nested Route musi byt schovana v <routes></routes>
+=> abychom mohli zobrazit welcome/new-user, coz je nested route ve welcome, musime v App pridat welcome/* a v te nested Route ve welcome upravime path na jen 'new-user'
+=> dalsi pozn. ve welcome komponente.
+=> ve verzi 6 uz neni useHistory. misto toho je useNavigate.
+=> Kdyz za to navigate hodime jeste replace, tak to bude redirectovat, ne pushovat:
+ <Route path="/" element={<Navigate to="/welcome" />} />
+
+
+Takhle to bylo s react-router-dom 5:
+<main>
         <Switch>
           <Route path='/' exact>
             <Redirect to='/welcome' />
@@ -25,12 +57,7 @@ function App() {
             <ProductDetail />
           </Route>
         </Switch>
-      </main>
-    </div>
-  );
-}
-
-export default App;
+*/
 
 /*
 Tohle je DYNAMIC ROUTE:
